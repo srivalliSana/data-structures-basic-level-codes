@@ -1,0 +1,113 @@
+#include <stdio.h>
+#define MAX_SIZE 100 // Maximum size of the array
+int arr[MAX_SIZE], n, choice; // Array to store elements and its size, user's choice from menu
+void insert();                   // Function for implementing insertion operation
+void delete();                    // Function for implementing deletion operation
+int search(int key);              // Function for implementing searching operation
+void mergeSort(int left[], int right[], int middle); // Function for implementing merging sort algorithm
+void display();                     // Function for displaying the array
+void exitProgram();               // Function for exiting the program
+
+// Main function starts here
+int main() {
+    printf("Enter number of elements (max %d): ", MAX_SIZE);
+    scanf("%d", &n);
+    if (n > MAX_SIZE || n <= 0) {
+        printf("Invalid Input\n");
+        return -1;
+    }
+    do {
+        printf("\nMENU:\n");
+        printf("1. Insertion\n2. Deletion\n3. Searching\n4. Sorting\n5. Merge\n6. Display\n7. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                insert();
+                break;
+            case 2:
+                delete();
+                break;
+            case 3:
+                printf("Element found at position: %d\n", search(choice));
+                break;
+            case 4:
+                mergeSort(arr, arr + n, 0);
+                printf("Sorted Array is:\n");
+                display();
+                break;
+            case 5:
+                int l, r;
+                printf("Enter Left Arrays index: ");
+                scanf("%d", &l);
+                printf("Enter Right Arrays index: ");
+                scanf("%d", &r);
+                mergeSort(arr + l, arr + r, (l + r) / 2);
+                printf("Merged Array is:\n");
+                display();
+                break;
+            case 6:
+                display();
+                break;
+            case 7:
+                exitProgram();
+            default:
+                printf("Invalid Choice!\n");
+                break;
+        }
+    } while (true);
+}
+
+// Implementation of Insertion
+void insert() {
+    int x;
+    printf("Enter element to be inserted: ");
+    scanf("%d", &x);
+    for (int i = n - 1; i >= 0; --i) {
+        arr[i + 1] = arr[i];
+    }
+    arr[0] = x;
+    ++n;
+}
+
+// Implementation of Delete
+void delete() {
+    int pos;
+    printf("Enter position to be deleted: ");
+    scanf("%d", &pos);
+    if (pos < 0 || pos >= n) {
+        printf("Invalid Position!\n");
+        return;
+    }
+    for (int I = pos; I < n - 1; ++i) {
+        arr[i] = arr[i + 1];
+    }
+    --n;
+}
+
+// Implementation of Search
+int search(int key) {
+    int low = 0, high = n - 1;
+    int mid;
+    while (low <= high) {
+        mid = (low + high) >> 1;
+        if (key == arr[mid]) {
+            return mid + 1;
+        } else if (key > arr[mid]) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+    return -1;
+}
+
+// Implementation of Merge Sort Algorithm
+void mergeSort(int left[], int right[], int middle) {
+    int n1 = middle - left + 1;
+    int n2 = right - middle;
+    int L[n1], R[n2];
+    for (int I = 0; I < n1; i++) {
+        L[i] = left[i];
+    }
+    for (int j =
